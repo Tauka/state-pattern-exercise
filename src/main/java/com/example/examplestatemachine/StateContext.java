@@ -6,11 +6,11 @@ public class StateContext {
     State acceptState ;
     State rejectState ;
     State s;
-    Boolean isFirstActionA = null;
+    private Boolean isFirstActionA = null;
 
     public StateContext () {
-        this.rejectState = new ConcreteState(this, false);
-        this.acceptState = new ConcreteState(this, true);
+        this.rejectState = new RejectState(this);
+        this.acceptState = new AcceptState(this);
         s = rejectState ;
     }
     public void actionA() {
@@ -18,28 +18,14 @@ public class StateContext {
             isFirstActionA = true;
         }
 
-        if (isFirstActionA == true) {
-            s.actionA();
-        }
-
-        if (isFirstActionA == false) {
-            s.actionB();
-        }
-
+        s.actionA();
     }
     public void actionB() {
         if (isFirstActionA == null) {
             isFirstActionA = false;
         }
 
-        if (isFirstActionA == true) {
-            s.actionB();
-        }
-
-        if (isFirstActionA == false) {
-            s.actionA();
-        }
-
+        s.actionB();
     }
 
     public boolean isAccept() {
@@ -56,5 +42,9 @@ public class StateContext {
 
     public State getRejectState() {
         return this.rejectState;
+    }
+
+    public Boolean getIsFirstActionA() {
+        return isFirstActionA;
     }
 }
